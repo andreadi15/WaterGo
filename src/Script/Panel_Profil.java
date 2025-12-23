@@ -34,7 +34,7 @@ public class Panel_Profil extends javax.swing.JPanel {
 //    private List<AP_ProductCard> cards = new ArrayList<>();
 //    public static Map<String, Map<String, Object>> cart = new HashMap<>();
     public static Menu_Customer menu_customer;
-    private AP_RoundedButton btnSimpan;
+    public AP_RoundedButton btnSimpan;
     private String nama_user;
     private String password_value;
     private String no_telp;
@@ -43,7 +43,33 @@ public class Panel_Profil extends javax.swing.JPanel {
     /**
      * Creates new form Panel_Produk
      */
-    
+
+    public Panel_Profil(Menu_Customer menu) {
+        initComponents();
+        setInputListener(nama);
+        setInputListener(password);
+        setInputListener(no_hp);
+        setInputListener(alamat);
+
+        // ================= CONTAINER MERAH =================
+        // ============ TOMBOL SIMPAN ===============
+        btnSimpan = new AP_RoundedButton("Simpan",30,24);
+        btnSimpan.setBackground( new Color(40, 90, 200));
+        btnSimpan.setForeground(Color.WHITE);
+        btnSimpan.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnSimpan.setSize(240, 40);
+        btnSimpan.setLocation(20, 10);
+        btnSimpan.setFocusPainted(false);
+        btnSimpan.addActionListener(e -> SaveData());
+        btnSimpan.setVisible(false);
+        panelBottom.add(btnSimpan);
+        
+        Panel_Profil.menu_customer = menu;
+        revalidate();
+        repaint();
+    }
+
+     
     public void loadData(){
         String sql = "SELECT * FROM pelanggan WHERE id_user = ?";
         try (PreparedStatement ps = AP_Database.con.prepareStatement(sql)) {
@@ -88,7 +114,7 @@ public class Panel_Profil extends javax.swing.JPanel {
             return;
         }      
         
-        String sql = "UPDATE pelanggan" +  
+        String sql = "UPDATE pelanggan " +  
                     "SET " + 
                     "nama = ?," + 
                     "password = ?," + 
@@ -124,9 +150,12 @@ public class Panel_Profil extends javax.swing.JPanel {
         if (!nama.getText().equals(nama_user) || 
             !password.getText().equals(password_value) ||
             !no_hp.getText().equals(no_telp) ||
-            !alamat.getText().equals(alamat_user)){return;}
+            !alamat.getText().equals(alamat_user)){btnSimpan.setVisible(true);}
+        else{
+            btnSimpan.setVisible(false);
+        }
         
-        btnSimpan.setVisible(true);
+        
     }
 
     private void setInputListener(JTextField inp){
@@ -136,7 +165,9 @@ public class Panel_Profil extends javax.swing.JPanel {
                 if (e.getClickCount() == 1) {
                     inp.setEditable(true);
                     inp.requestFocusInWindow();
-                    inp.selectAll();
+                    SwingUtilities.invokeLater(() -> {
+                        inp.setCaretPosition(inp.getText().length());
+                    });                
                 }
             }
         });
@@ -152,34 +183,6 @@ public class Panel_Profil extends javax.swing.JPanel {
             }
         });
     }
-    
-    public Panel_Profil(Menu_Customer menu) {
-        initComponents();
-        setInputListener(nama);
-        setInputListener(password);
-        setInputListener(no_hp);
-        setInputListener(alamat);
-
-        // ================= CONTAINER MERAH =================
-        // ============ TOMBOL SIMPAN ===============
-        btnSimpan = new AP_RoundedButton("Simpan",30,24);
-        btnSimpan.setBackground( new Color(40, 90, 200));
-        btnSimpan.setForeground(Color.WHITE);
-        btnSimpan.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-        btnSimpan.setSize(240, 40);
-        btnSimpan.setLocation(20, 10);
-        btnSimpan.setFocusPainted(false);
-        btnSimpan.addActionListener(e -> SaveData());
-        btnSimpan.setVisible(false);
-        panelBottom.add(btnSimpan);
-        
-        Panel_Profil.menu_customer = menu;
-        revalidate();
-        repaint();
-    }
-
- 
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -208,6 +211,12 @@ public class Panel_Profil extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(230, 234, 237));
 
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
+
         titlr.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         titlr.setText("Profil Customer");
 
@@ -228,6 +237,12 @@ public class Panel_Profil extends javax.swing.JPanel {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Nama");
 
@@ -246,12 +261,19 @@ public class Panel_Profil extends javax.swing.JPanel {
         nama.setEditable(false);
 
         username.setEditable(false);
+        username.setEnabled(false);
 
         password.setEditable(false);
 
         no_hp.setEditable(false);
 
         alamat.setEditable(false);
+
+        panelBottom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                panelBottomMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelBottomLayout = new javax.swing.GroupLayout(panelBottom);
         panelBottom.setLayout(panelBottomLayout);
@@ -271,20 +293,22 @@ public class Panel_Profil extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(55, 55, 55)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(no_hp, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(288, Short.MAX_VALUE))
-            .addComponent(panelBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(no_hp, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(282, Short.MAX_VALUE))
+                    .addComponent(panelBottom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,9 +342,12 @@ public class Panel_Profil extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,6 +371,21 @@ public class Panel_Profil extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        // TODO add your handling code here:
+        requestFocusInWindow();
+    }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void panelBottomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelBottomMouseClicked
+        // TODO add your handling code here:
+        requestFocusInWindow();
+    }//GEN-LAST:event_panelBottomMouseClicked
+
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        // TODO add your handling code here:
+        requestFocusInWindow();
+    }//GEN-LAST:event_jPanel2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField alamat;

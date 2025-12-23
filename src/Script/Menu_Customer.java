@@ -106,6 +106,7 @@ public class Menu_Customer extends javax.swing.JFrame {
         
         // Action Button Profil Pengguna        
         btnProfil.addActionListener(e ->{
+            profil.btnSimpan.setVisible(false);
             profil.loadData();
             cardLayout.show(content, "profil");
             }  

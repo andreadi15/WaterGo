@@ -225,6 +225,7 @@ public class Form_Login extends javax.swing.JFrame {
                 
             } else if (loginPelanggan(username.getText(), pass)) {
                 new Menu_Customer().setVisible(true);
+                this.dispose();
             }
             else{
                 JOptionPane.showMessageDialog(this,"Username Atau Password Salah");                

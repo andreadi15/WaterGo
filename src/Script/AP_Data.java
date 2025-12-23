@@ -24,15 +24,15 @@ public class AP_Data {
     public static void set_User(String id,String nama,String alamat,String no_telp){
         AP_Data.id_user = id;
         AP_Data.nama_user = nama;
+        AP_Data.no_telp = no_telp;                 
         AP_Data.alamat = alamat;
-        AP_Data.no_telp = no_telp;         
         AP_Data.auth = "customer";
     }
     
-    public static void update_User(String nama,String alamat,String no_telp){
+    public static void update_User(String nama,String no_telp,String alamat){
         AP_Data.nama_user = nama;
+        AP_Data.no_telp = no_telp;                 
         AP_Data.alamat = alamat;
-        AP_Data.no_telp = no_telp;         
         AP_Data.auth = "customer";
     }
     
