@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 public class Menu_Customer extends javax.swing.JFrame {
     public Panel_Produk produk = new Panel_Produk(this);
     public static Info_Transaksi riwayat = new Info_Transaksi();
+    public Panel_Profil profil = new Panel_Profil(this);
     private CardLayout cardLayout;
     /**
      * Creates new form Menu
@@ -25,9 +26,12 @@ public class Menu_Customer extends javax.swing.JFrame {
         initComponents();
         this.setLocation(300,150);
         
-        riwayat.tampilkanDataTransaksi();
+        riwayat.loadData();
         cardLayout = (CardLayout) content.getLayout();
         content.add(riwayat, "riwayat");
+        
+        profil.loadData();
+        content.add(profil, "profil");
         
         // Blok Kode Panel Menu       
         AP_RoundedPanel menu = new AP_RoundedPanel(20);
@@ -79,8 +83,31 @@ public class Menu_Customer extends javax.swing.JFrame {
         // Action Button Riwayat Transaksi        
         btnRiwayatTransaksi.addActionListener(e ->{
             Panel_Produk.cart.clear();
-            riwayat.tampilkanDataTransaksi();
+            riwayat.loadData();
             cardLayout.show(content, "riwayat");
+            }  
+        );
+        
+        // Profil pengguna Button
+        AP_RoundedButton btnProfil = new AP_RoundedButton(
+            "Profil",     // Text Button
+            15,                // Border Radius
+            19,               // Normal Size Font
+            true,          // resize effect
+            true,           // hover effect
+            new Color(40, 90, 200) // hover color
+        );        
+        btnProfil.setBackground( new Color(255, 255, 255));
+        btnProfil.setForeground(Color.BLACK);
+        btnProfil.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnProfil.setPreferredSize(new Dimension(175, 40));
+        btnProfil.setMaximumSize(new Dimension(175, 40));
+        btnProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Action Button Profil Pengguna        
+        btnProfil.addActionListener(e ->{
+            profil.loadData();
+            cardLayout.show(content, "profil");
             }  
         );
         
@@ -88,6 +115,8 @@ public class Menu_Customer extends javax.swing.JFrame {
         menu.add(btnPesan);
         menu.add(Box.createVerticalStrut(15));
         menu.add(btnRiwayatTransaksi);
+        menu.add(Box.createVerticalStrut(15));
+        menu.add(btnProfil);
         
         all_menu.revalidate();
         all_menu.repaint();

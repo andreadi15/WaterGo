@@ -199,7 +199,16 @@ public class Form_Login extends javax.swing.JFrame {
             ps.setString(1, usrname);
             ps.setString(2, password);
             rs = ps.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                String user_id = rs.getString("id_user");
+                String nama = rs.getString("nama");
+                String alamat = rs.getString("alamat");
+                String no_telp = rs.getString("telepon");
+
+                AP_Data.set_User(user_id, nama, alamat, no_telp);
+
+                return true; 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -215,7 +224,7 @@ public class Form_Login extends javax.swing.JFrame {
             if(loginAdmin(username.getText(),pass)){
                 
             } else if (loginPelanggan(username.getText(), pass)) {
-                
+                new Menu_Customer().setVisible(true);
             }
             else{
                 JOptionPane.showMessageDialog(this,"Username Atau Password Salah");                

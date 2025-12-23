@@ -46,7 +46,7 @@ public class Info_Transaksi extends javax.swing.JPanel {
     }
 
 //  Metode Menampilkan Data Ke Tabel
-    public void tampilkanDataTransaksi(){
+    public void loadData(){
         DefaultTableModel model = (DefaultTableModel) tableContainer.getModel();
         model.setRowCount(0);
         String id_user = AP_Data.id_user; 

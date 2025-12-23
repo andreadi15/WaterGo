@@ -26,7 +26,8 @@ public class AP_Database {
         }
         catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Gagal Koneksi...Error: " + e);
+            JOptionPane.showMessageDialog(null, "Koneksi Terputus");
+            System.exit((0));
         }
     }
 }

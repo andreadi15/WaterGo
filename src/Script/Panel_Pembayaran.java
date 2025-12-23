@@ -123,7 +123,7 @@ public class Panel_Pembayaran extends javax.swing.JPanel {
                 }
                 Panel_Produk.cart.clear();
                 catatan.setText("");
-                Panel_Produk.menu_customer.riwayat.tampilkanDataTransaksi();
+                Panel_Produk.menu_customer.riwayat.loadData();
                 CardLayout cardLayout = (CardLayout) Panel_Produk.menu_customer.content.getLayout();
                 cardLayout.show(Panel_Produk.menu_customer.content, "riwayat");
             }
