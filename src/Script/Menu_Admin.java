@@ -14,25 +14,25 @@ import javax.swing.BoxLayout;
  *
  * @author asus
  */
-public class Menu_Customer extends javax.swing.JFrame {
-    public Panel_Produk produk = new Panel_Produk(this);
-    public static Info_Transaksi riwayat = new Info_Transaksi();
-    public Panel_Profil profil = new Panel_Profil(this);
+public class Menu_Admin extends javax.swing.JFrame {
+    public Daftar_Pesanan daftar_pesan = new Daftar_Pesanan();
+//    public static Info_Transaksi riwayat = new Info_Transaksi();
+//    public Panel_Profil profil = new Panel_Profil(this);
     private CardLayout cardLayout;
     /**
      * Creates new form Menu
      */
-    public Menu_Customer() {
+    public Menu_Admin() {
         initComponents();
         this.setLocation(300,150);
         
-        riwayat.loadData();
+        daftar_pesan.loadData();
         cardLayout = (CardLayout) content.getLayout();
-        content.add(riwayat, "riwayat");
-        
-        profil.loadData();
-        content.add(profil, "profil");
-        
+        content.add(daftar_pesan, "daftar_pesan");
+//        
+//        profil.loadData();
+//        content.add(profil, "profil");
+//        
         // Blok Kode Panel Menu       
         AP_RoundedPanel menu = new AP_RoundedPanel(20);
         menu.setBackground(new Color(230,234,237));
@@ -40,9 +40,9 @@ public class Menu_Customer extends javax.swing.JFrame {
         menu.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
         menu.setOpaque(false);
         all_menu.add(menu);
-        
+//        
         // Pesan Button
-        AP_RoundedButton btnPesan = new AP_RoundedButton(
+        AP_RoundedButton btnDaftarPesanan = new AP_RoundedButton(
             "Pesan",        // Text Button
             15,           // Border Radius
             19,          // Normal Size Font
@@ -50,75 +50,73 @@ public class Menu_Customer extends javax.swing.JFrame {
             true,      // hover effect
             new Color(40, 90, 200) // hover color
         );        
-        btnPesan.setBackground( new Color(255, 255, 255));
-        btnPesan.setForeground(Color.BLACK);
-        btnPesan.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-        btnPesan.setPreferredSize(new Dimension(175, 40));
-        btnPesan.setMaximumSize(new Dimension(175, 40));
-        btnPesan.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btnDaftarPesanan.setBackground( new Color(255, 255, 255));
+        btnDaftarPesanan.setForeground(Color.BLACK);
+        btnDaftarPesanan.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnDaftarPesanan.setPreferredSize(new Dimension(175, 40));
+        btnDaftarPesanan.setMaximumSize(new Dimension(175, 40));
+        btnDaftarPesanan.setAlignmentX(Component.LEFT_ALIGNMENT);
         // Action Button Riwayat Transaksi        
-        btnPesan.addActionListener(e ->{
-            Panel_Produk.cart.clear();
-            cardLayout = (CardLayout) content.getLayout();
-            content.add(produk, "produk");
-            cardLayout.show(content, "produk");
+        btnDaftarPesanan.addActionListener(e ->{
+            daftar_pesan.loadData();
+            cardLayout.show(content, "daftar_pesan");
             }  
         );
-        
-        // Riwayat Transaksi Button
-        AP_RoundedButton btnRiwayatTransaksi = new AP_RoundedButton(
-            "Riwayat Pesan",     // Text Button
-            15,                // Border Radius
-            19,               // Normal Size Font
-            true,          // resize effect
-            true,           // hover effect
-            new Color(40, 90, 200) // hover color
-        );        
-        btnRiwayatTransaksi.setBackground( new Color(255, 255, 255));
-        btnRiwayatTransaksi.setForeground(Color.BLACK);
-        btnRiwayatTransaksi.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-        btnRiwayatTransaksi.setPreferredSize(new Dimension(175, 40));
-        btnRiwayatTransaksi.setMaximumSize(new Dimension(175, 40));
-        btnRiwayatTransaksi.setAlignmentX(Component.LEFT_ALIGNMENT);
-        // Action Button Riwayat Transaksi        
-        btnRiwayatTransaksi.addActionListener(e ->{
-            Panel_Produk.cart.clear();
-            riwayat.loadData();
-            cardLayout.show(content, "riwayat");
-            }  
-        );
-        
-        // Profil pengguna Button
-        AP_RoundedButton btnProfil = new AP_RoundedButton(
-            "Profil",     // Text Button
-            15,                // Border Radius
-            19,               // Normal Size Font
-            true,          // resize effect
-            true,           // hover effect
-            new Color(40, 90, 200) // hover color
-        );        
-        btnProfil.setBackground( new Color(255, 255, 255));
-        btnProfil.setForeground(Color.BLACK);
-        btnProfil.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-        btnProfil.setPreferredSize(new Dimension(175, 40));
-        btnProfil.setMaximumSize(new Dimension(175, 40));
-        btnProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
-        // Action Button Profil Pengguna        
-        btnProfil.addActionListener(e ->{
-            profil.btnSimpan.setVisible(false);
-            profil.loadData();
-            cardLayout.show(content, "profil");
-            }  
-        );
-        
-        // Penambahan Elemen Ke Dalam Panel Menu
-        menu.add(btnPesan);
-        menu.add(Box.createVerticalStrut(15));
-        menu.add(btnRiwayatTransaksi);
-        menu.add(Box.createVerticalStrut(15));
-        menu.add(btnProfil);
-        
+//        
+//        // Riwayat Transaksi Button
+//        AP_RoundedButton btnRiwayatTransaksi = new AP_RoundedButton(
+//            "Riwayat Pesan",     // Text Button
+//            15,                // Border Radius
+//            19,               // Normal Size Font
+//            true,          // resize effect
+//            true,           // hover effect
+//            new Color(40, 90, 200) // hover color
+//        );        
+//        btnRiwayatTransaksi.setBackground( new Color(255, 255, 255));
+//        btnRiwayatTransaksi.setForeground(Color.BLACK);
+//        btnRiwayatTransaksi.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+//        btnRiwayatTransaksi.setPreferredSize(new Dimension(175, 40));
+//        btnRiwayatTransaksi.setMaximumSize(new Dimension(175, 40));
+//        btnRiwayatTransaksi.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        // Action Button Riwayat Transaksi        
+//        btnRiwayatTransaksi.addActionListener(e ->{
+//            Panel_Produk.cart.clear();
+//            riwayat.loadData();
+//            cardLayout.show(content, "riwayat");
+//            }  
+//        );
+//        
+//        // Profil pengguna Button
+//        AP_RoundedButton btnProfil = new AP_RoundedButton(
+//            "Profil",     // Text Button
+//            15,                // Border Radius
+//            19,               // Normal Size Font
+//            true,          // resize effect
+//            true,           // hover effect
+//            new Color(40, 90, 200) // hover color
+//        );        
+//        btnProfil.setBackground( new Color(255, 255, 255));
+//        btnProfil.setForeground(Color.BLACK);
+//        btnProfil.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+//        btnProfil.setPreferredSize(new Dimension(175, 40));
+//        btnProfil.setMaximumSize(new Dimension(175, 40));
+//        btnProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
+//        
+//        // Action Button Profil Pengguna        
+//        btnProfil.addActionListener(e ->{
+//            profil.btnSimpan.setVisible(false);
+//            profil.loadData();
+//            cardLayout.show(content, "profil");
+//            }  
+//        );
+//        
+//        // Penambahan Elemen Ke Dalam Panel Menu
+        menu.add(btnDaftarPesanan);
+//        menu.add(Box.createVerticalStrut(15));
+//        menu.add(btnRiwayatTransaksi);
+//        menu.add(Box.createVerticalStrut(15));
+//        menu.add(btnProfil);
+//        
         all_menu.revalidate();
         all_menu.repaint();
         revalidate();
@@ -163,7 +161,7 @@ public class Menu_Customer extends javax.swing.JFrame {
         jLabel1.setFont(new Font("Antipasto Pro Bold",Font.BOLD,42));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("WATERGO CUSTOMER");
+        jLabel1.setText("WATERGO DASHBOARD ADMIN");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -171,8 +169,8 @@ public class Menu_Customer extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(462, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(345, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,14 +264,16 @@ public class Menu_Customer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -281,7 +281,7 @@ public class Menu_Customer extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Menu_Customer().setVisible(true);
+                new Menu_Admin().setVisible(true);
             }
         });
     }

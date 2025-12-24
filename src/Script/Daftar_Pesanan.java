@@ -12,19 +12,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 /**
  *
  * @author asus
  */
-public class Info_Transaksi extends javax.swing.JPanel {
+public class Daftar_Pesanan extends javax.swing.JPanel {
     public ResultSet rs = null;
+    private detail_pesanan detail_pesan = new detail_pesanan();
+ ;
     private String sql;
-    /**
-     * Creates new form info_mobil
-     */
-    public Info_Transaksi() {
+
+    
+    public Daftar_Pesanan() {
         initComponents();
         
+        TableColumn idColumn = tableContainer.getColumnModel().getColumn(0);
+        idColumn.setMinWidth(0);
+        idColumn.setMaxWidth(0);
+        idColumn.setPreferredWidth(0);
+
 //      Assign Warna Pada Status Pesanan
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
@@ -43,20 +50,27 @@ public class Info_Transaksi extends javax.swing.JPanel {
                 return c;
             }
         };
-        tableContainer.getColumnModel().getColumn(6).setCellRenderer(renderer);
+        tableContainer.getColumnModel().getColumn(5).setCellRenderer(renderer);
     }
 
 //  Metode Menampilkan Data Ke Tabel
     public void loadData(){
         DefaultTableModel model = (DefaultTableModel) tableContainer.getModel();
         model.setRowCount(0);
-        String id_user = AP_Data.id_user; 
 
         //Query SQL Untuk Mengambil Data        
-        sql = "SELECT * FROM pesanan WHERE id_pelanggan = ? ORDER BY id_pesanan DESC";
+        sql = "SELECT "
+                  + "pesanan.id_pesanan,"
+                  + "pelanggan.nama,"
+                  + "pesanan.tanggal_pesan,"
+                  + "pesanan.metode_bayar,"
+                  + "pesanan.total_harga,"
+                  + "pesanan.status "
+                  + "FROM pesanan "
+                  + "JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.id_user "
+                  + "ORDER BY id_pesanan DESC";
         try (PreparedStatement ps = AP_Database.con.prepareStatement(sql))
         {
-            ps.setString(1, id_user);
             rs = ps.executeQuery();
 
             // Blok Menambahkan Value Ke Tabel 
@@ -64,16 +78,14 @@ public class Info_Transaksi extends javax.swing.JPanel {
             {
                 model.addRow(new Object[]{
                     rs.getString("id_pesanan"),
+                    rs.getString("nama"),
                     rs.getString("tanggal_pesan"),
-                    rs.getString("alamat_kirim"),
-                    rs.getString("catatan"),
                     rs.getString("metode_bayar"),
                     String.valueOf("Rp. " + rs.getInt("total_harga")),
                     rs.getString("status")
                 });
             }
-           //perintah untuk eksekusi sql 
-            }
+        }
         catch(Exception e)
         {
             JOptionPane.showMessageDialog(null,e);
@@ -86,19 +98,39 @@ public class Info_Transaksi extends javax.swing.JPanel {
         model.setRowCount(0);
 
         //Query SQL Untuk Pencarian Data        
-        sql = "SELECT * FROM pesanan WHERE id_pelanggan = ? AND (id_pesanan LIKE ? OR tanggal_pesan LIKE ? OR alamat_kirim LIKE ? OR catatan LIKE ? OR metode_bayar LIKE ? OR total_harga LIKE ? OR status LIKE ?) ";
+        String sql =
+            "SELECT " +
+            "pesanan.id_pesanan, " +
+            "pelanggan.nama, " +
+            "pesanan.tanggal_pesan, " +
+            "pesanan.alamat_kirim, " +
+            "pesanan.catatan, " +
+            "pesanan.metode_bayar, " +
+            "pesanan.total_harga, " +
+            "pesanan.status " +
+            "FROM pesanan " +
+            "JOIN pelanggan ON pesanan.id_pelanggan = pelanggan.id_user " +
+            "WHERE pelanggan.nama LIKE ? OR " +
+            "pesanan.tanggal_pesan LIKE ? OR " +
+            "pesanan.alamat_kirim LIKE ? OR " +
+            "pesanan.catatan LIKE ? OR " +
+            "pesanan.metode_bayar LIKE ? OR " +
+            "CAST(pesanan.total_harga AS CHAR) LIKE ? OR " +
+            "pesanan.status LIKE ? " +
+            ") " +
+            "ORDER BY pesanan.id_pesanan DESC";
+        
         try(PreparedStatement ps = AP_Database.con.prepareStatement(sql))
         {
             //ASsign Value Pencarian Ke Sql
             String cari_value = "%" + key + "%";
-            ps.setString(1, AP_Data.id_user);
+            ps.setString(1, cari_value);
             ps.setString(2, cari_value);
             ps.setString(3, cari_value);
             ps.setString(4, cari_value);
             ps.setString(5, cari_value);
             ps.setString(6, cari_value);
             ps.setString(7, cari_value);
-            ps.setString(8, cari_value);
             rs = ps.executeQuery();
             
             // Blok Menambahkan Value Ke Tabel 
@@ -106,6 +138,7 @@ public class Info_Transaksi extends javax.swing.JPanel {
             {
                 model.addRow(new Object[]{
                     rs.getString("id_pesanan"),
+                    rs.getString("nama"),
                     rs.getString("tanggal_pesan"),
                     rs.getString("alamat_kirim"),
                     rs.getString("catatan"),
@@ -120,6 +153,46 @@ public class Info_Transaksi extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,e);
         }
     }
+    
+    private void detail(){
+        int row = tableContainer.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih pesanan dulu");
+            return;
+        }
+
+        String id_pesanan = tableContainer.getValueAt(row, 0).toString();
+        
+        detail_pesan.loadData(id_pesanan);
+        detail_pesan.setVisible(true);
+    }
+    
+    private void selesai(){
+        int row = tableContainer.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih pesanan dulu");
+            return;
+        }
+
+        String id_pesanan = tableContainer.getValueAt(row, 0).toString();
+        String status = tableContainer.getValueAt(row, 5).toString();
+        if(status.equals("Selesai") || status.equals("Batal")){return;}
+        
+        sql = "UPDATE pesanan SET status = 'Selesai' WHERE id_pesanan = ?";
+        try (PreparedStatement ps = AP_Database.con.prepareStatement(sql))
+        {
+            ps.setString(1, id_pesanan);
+            ps.executeUpdate();            
+            loadData();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,e);
+        }
+    }
+    
     private void batal(){
         int row = tableContainer.getSelectedRow();
 
@@ -129,10 +202,10 @@ public class Info_Transaksi extends javax.swing.JPanel {
         }
 
         String id_pesanan = tableContainer.getValueAt(row, 0).toString();
-        String status = tableContainer.getValueAt(row, 6).toString();
+        sql = "UPDATE pesanan SET status = 'Batal' WHERE id_pesanan = ?";
+        String status = tableContainer.getValueAt(row, 5).toString();
         if(status.equals("Selesai") || status.equals("Batal")){return;}
         
-        sql = "UPDATE pesanan SET status = 'Batal' WHERE id_pesanan = ?";
         try (PreparedStatement ps = AP_Database.con.prepareStatement(sql))
         {
             ps.setString(1, id_pesanan);
@@ -157,27 +230,29 @@ public class Info_Transaksi extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableContainer = new javax.swing.JTable();
         cari = new javax.swing.JButton();
+        cari1 = new javax.swing.JButton();
         batal = new javax.swing.JButton();
+        selesai = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         tableContainer.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         tableContainer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Pesanan", "Tanggal Pesan", "Alamat Kirim", "Catatan", "Pembayaran", "Total Harga", "Status"
+                "id_pesanan", "Nama ", "Tanggal Pesan", "Pembayaran", "Jumlah", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -198,7 +273,6 @@ public class Info_Transaksi extends javax.swing.JPanel {
             tableContainer.getColumnModel().getColumn(3).setResizable(false);
             tableContainer.getColumnModel().getColumn(4).setResizable(false);
             tableContainer.getColumnModel().getColumn(5).setResizable(false);
-            tableContainer.getColumnModel().getColumn(6).setResizable(false);
         }
 
         cari.setBackground(new java.awt.Color(40, 90, 200));
@@ -208,6 +282,16 @@ public class Info_Transaksi extends javax.swing.JPanel {
         cari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cariActionPerformed(evt);
+            }
+        });
+
+        cari1.setBackground(new java.awt.Color(40, 90, 200));
+        cari1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cari1.setForeground(new java.awt.Color(255, 255, 255));
+        cari1.setText("Detail");
+        cari1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cari1ActionPerformed(evt);
             }
         });
 
@@ -221,6 +305,16 @@ public class Info_Transaksi extends javax.swing.JPanel {
             }
         });
 
+        selesai.setBackground(new java.awt.Color(0, 153, 0));
+        selesai.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        selesai.setForeground(new java.awt.Color(255, 255, 255));
+        selesai.setText("Selesai");
+        selesai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selesaiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,7 +325,11 @@ public class Info_Transaksi extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cari1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -241,7 +339,9 @@ public class Info_Transaksi extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cari, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cari1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(batal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -259,16 +359,28 @@ public class Info_Transaksi extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cariActionPerformed
 
+    private void cari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari1ActionPerformed
+        // TODO add your handling code here:
+        detail();
+    }//GEN-LAST:event_cari1ActionPerformed
+
     private void batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalActionPerformed
         // TODO add your handling code here:
         batal();
     }//GEN-LAST:event_batalActionPerformed
 
+    private void selesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selesaiActionPerformed
+        // TODO add your handling code here:
+        selesai();
+    }//GEN-LAST:event_selesaiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton batal;
     private javax.swing.JButton cari;
+    private javax.swing.JButton cari1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton selesai;
     private javax.swing.JTable tableContainer;
     // End of variables declaration//GEN-END:variables
 }

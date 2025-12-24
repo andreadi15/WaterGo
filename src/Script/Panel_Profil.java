@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
@@ -50,6 +51,11 @@ public class Panel_Profil extends javax.swing.JPanel {
         setInputListener(password);
         setInputListener(no_hp);
         setInputListener(alamat);
+        
+        username.setBorder(null);
+        username.setPreferredSize(new Dimension(400,38));
+        username.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
+
 
         // ================= CONTAINER MERAH =================
         // ============ TOMBOL SIMPAN ===============
@@ -144,6 +150,7 @@ public class Panel_Profil extends javax.swing.JPanel {
     private void selesaiEdit(JTextField inp) {
         if (!inp.isEditable()) return;
         setFocusable(true);
+        inp.setCaretPosition(0);
         requestFocusInWindow();
         inp.setEditable(false);
 
@@ -159,6 +166,9 @@ public class Panel_Profil extends javax.swing.JPanel {
     }
 
     private void setInputListener(JTextField inp){
+        inp.setBorder(null);
+        inp.setPreferredSize(new Dimension(400,38));
+        inp.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
         inp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -211,13 +221,16 @@ public class Panel_Profil extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(230, 234, 237));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
             }
         });
 
-        titlr.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        titlr.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 28));
         titlr.setText("Profil Customer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -225,8 +238,8 @@ public class Panel_Profil extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(titlr)
+                .addContainerGap()
+                .addComponent(titlr, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -237,38 +250,62 @@ public class Panel_Profil extends javax.swing.JPanel {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel3MouseClicked(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 22));
         jLabel1.setText("Nama");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 22));
         jLabel2.setText("Username");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 22));
         jLabel3.setText("Password");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 22));
         jLabel4.setText("No HP");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Antipasto Pro Bold", Font.BOLD, 22));
         jLabel5.setText("Alamat");
 
         nama.setEditable(false);
+        nama.setBackground(new java.awt.Color(204, 204, 204));
+        nama.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
+        nama.setMinimumSize(new java.awt.Dimension(64, 38));
+        nama.setPreferredSize(new java.awt.Dimension(64, 38));
+        nama.setSelectionColor(new java.awt.Color(51, 153, 255));
 
         username.setEditable(false);
-        username.setEnabled(false);
+        username.setBackground(new java.awt.Color(204, 204, 204));
+        username.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
+        username.setForeground(new java.awt.Color(102, 102, 102));
+        username.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        username.setFocusable(false);
+        username.setOpaque(true);
+        username.setRequestFocusEnabled(false);
+        username.setSelectionColor(new java.awt.Color(51, 153, 255));
+        username.setVerifyInputWhenFocusTarget(false);
 
         password.setEditable(false);
+        password.setBackground(new java.awt.Color(204, 204, 204));
+        password.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
+        password.setSelectionColor(new java.awt.Color(51, 153, 255));
 
         no_hp.setEditable(false);
+        no_hp.setBackground(new java.awt.Color(204, 204, 204));
+        no_hp.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
+        no_hp.setSelectionColor(new java.awt.Color(51, 153, 255));
 
         alamat.setEditable(false);
+        alamat.setBackground(new java.awt.Color(204, 204, 204));
+        alamat.setFont(new java.awt.Font("Microsoft JhengHei", 1, 18)); // NOI18N
+        alamat.setSelectionColor(new java.awt.Color(51, 153, 255));
 
+        panelBottom.setBackground(new java.awt.Color(255, 255, 255));
         panelBottom.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 panelBottomMouseClicked(evt);
@@ -301,38 +338,37 @@ public class Panel_Profil extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(55, 55, 55)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(no_hp, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(282, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(nama, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                            .addComponent(username)
+                            .addComponent(password)
+                            .addComponent(no_hp)
+                            .addComponent(alamat))
+                        .addContainerGap(179, Short.MAX_VALUE))
                     .addComponent(panelBottom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(no_hp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(no_hp, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(alamat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(alamat, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(panelBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -342,7 +378,7 @@ public class Panel_Profil extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

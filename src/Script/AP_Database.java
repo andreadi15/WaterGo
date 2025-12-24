@@ -21,7 +21,7 @@ public class AP_Database {
     public static void koneksi(){
         try
         {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_watergo?user=root&password=");
         }
         catch (Exception e)
