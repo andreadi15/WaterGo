@@ -94,7 +94,7 @@ public class Form_Daftar extends javax.swing.JFrame {
         no_telp.setText("");
         
 //        Setelah Daftar Akun Akan Langsung Diarahkan Ke Menu Customer
-        new Menu_Customer().setVisible(true);
+        new PLG_Menu_Customer().setVisible(true);
         this.dispose();
     }
     /**

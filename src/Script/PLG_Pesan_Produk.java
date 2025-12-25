@@ -23,17 +23,17 @@ import java.sql.ResultSet;
  *
  * @author asus
  */
-public class Panel_Produk extends javax.swing.JPanel {
+public class PLG_Pesan_Produk extends javax.swing.JPanel {
     public ResultSet rs;
     private List<AP_ProductCard> cards = new ArrayList<>();
     public static Map<String, Map<String, Object>> cart = new HashMap<>();
-    public static Menu_Customer menu_customer;
+    public static PLG_Menu_Customer menu_customer;
 
     /**
      * Creates new form Panel_Produk
      * @param menu
      */
-    public Panel_Produk(Menu_Customer menu) {
+    public PLG_Pesan_Produk(PLG_Menu_Customer menu) {
         initComponents();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -135,7 +135,7 @@ public class Panel_Produk extends javax.swing.JPanel {
         containerUngu.add(btnPesan);
         containerUngu.setAlignmentX(Component.LEFT_ALIGNMENT);
         add(containerUngu);
-        Panel_Produk.menu_customer = menu;
+        PLG_Pesan_Produk.menu_customer = menu;
         revalidate();
         repaint();
     }
@@ -154,7 +154,7 @@ public class Panel_Produk extends javax.swing.JPanel {
         }
         if(cart.isEmpty()) return;
         
-        Panel_Pembayaran pembayaran = new Panel_Pembayaran(cart);
+        PLG_Panel_Pembayaran pembayaran = new PLG_Panel_Pembayaran(cart);
         CardLayout cardLayout = (CardLayout) menu_customer.content.getLayout();
         menu_customer.content.add(pembayaran, "produk");
         cardLayout.show(menu_customer.content, "produk");

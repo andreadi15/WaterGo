@@ -27,8 +27,9 @@
                   <Component id="jScrollPane1" pref="633" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="cari" min="-2" pref="83" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="batal" min="-2" pref="83" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="kelola_data" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -41,7 +42,7 @@
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="cari" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="batal" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="kelola_data" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="388" max="-2" attributes="0"/>
@@ -63,33 +64,15 @@
               <Font name="Segoe UI" size="15" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
-                <Column editable="false" title="Kode Pesanan" type="java.lang.String"/>
-                <Column editable="false" title="Tanggal Pesan" type="java.lang.String"/>
-                <Column editable="false" title="Alamat Kirim" type="java.lang.String"/>
-                <Column editable="false" title="Catatan" type="java.lang.String"/>
-                <Column editable="false" title="Pembayaran" type="java.lang.String"/>
-                <Column editable="false" title="Total Harga" type="java.lang.String"/>
-                <Column editable="false" title="Status" type="java.lang.String"/>
+              <Table columnCount="4" rowCount="4">
+                <Column editable="false" title="ID Customer" type="java.lang.String"/>
+                <Column editable="false" title="Nama Customer" type="java.lang.String"/>
+                <Column editable="false" title="No Telepon" type="java.lang.String"/>
+                <Column editable="false" title="Alamat" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
@@ -137,10 +120,10 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cariActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="batal">
+    <Component class="javax.swing.JButton" name="kelola_data">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="2" green="2" red="e1" type="rgb"/>
+          <Color blue="c8" green="5a" red="28" type="rgb"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="12" style="1"/>
@@ -148,10 +131,10 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Batalkan"/>
+        <Property name="text" type="java.lang.String" value="Kelola Data"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="batalActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kelola_dataActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -222,10 +222,10 @@ public class Form_Login extends javax.swing.JFrame {
             String pass = new String(password.getPassword());
 
             if(loginAdmin(username.getText(),pass)){
-                new Menu_Admin().setVisible(true);
+                new ADM_Menu_Admin().setVisible(true);
                 this.dispose();
             } else if (loginPelanggan(username.getText(), pass)) {
-                new Menu_Customer().setVisible(true);
+                new PLG_Menu_Customer().setVisible(true);
                 this.dispose();
             }
             else{

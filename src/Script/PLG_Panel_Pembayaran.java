@@ -19,7 +19,7 @@ import java.sql.Date;
  *
  * @author asus
  */
-public class Panel_Pembayaran extends javax.swing.JPanel {
+public class PLG_Panel_Pembayaran extends javax.swing.JPanel {
     public ResultSet rs;
     private int total_bayar;
     private Map<String, Map<String, Object>> cart;
@@ -28,7 +28,7 @@ public class Panel_Pembayaran extends javax.swing.JPanel {
      * Creates new form Panel_Produk
      * @param cart
      */
-    public Panel_Pembayaran(Map<String, Map<String, Object>> cart) {
+    public PLG_Panel_Pembayaran(Map<String, Map<String, Object>> cart) {
         initComponents();
         this.cart = cart;
         
@@ -71,8 +71,9 @@ public class Panel_Pembayaran extends javax.swing.JPanel {
     private String create_id_order(){
         String lastId = null;
         String sql = "SELECT id_pesanan FROM pesanan ORDER BY id_pesanan DESC LIMIT 1"; // ambil ID terakhir
-        try (PreparedStatement ps = AP_Database.con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = AP_Database.con.prepareStatement(sql))
+        {
+            rs = ps.executeQuery();
 
             if (rs.next()) {
                 lastId = rs.getString("id_pesanan"); // misal "ORD005"
@@ -173,11 +174,11 @@ public class Panel_Pembayaran extends javax.swing.JPanel {
                 if(metode_bayar.getItemCount() > 0){
                     metode_bayar.setSelectedIndex(0);
                 }
-                Panel_Produk.cart.clear();
+                PLG_Pesan_Produk.cart.clear();
                 catatan.setText("");
-                Menu_Customer.riwayat.loadData();
-                CardLayout cardLayout = (CardLayout) Panel_Produk.menu_customer.content.getLayout();
-                cardLayout.show(Panel_Produk.menu_customer.content, "riwayat");
+                PLG_Menu_Customer.riwayat.loadData();
+                CardLayout cardLayout = (CardLayout) PLG_Pesan_Produk.menu_customer.content.getLayout();
+                cardLayout.show(PLG_Pesan_Produk.menu_customer.content, "riwayat");
             }
         }
         catch(Exception e)

@@ -14,15 +14,18 @@ import javax.swing.BoxLayout;
  *
  * @author asus
  */
-public class Menu_Customer extends javax.swing.JFrame {
-    public Panel_Produk produk = new Panel_Produk(this);
-    public static Info_Transaksi riwayat = new Info_Transaksi();
-    public Panel_Profil profil = new Panel_Profil(this);
+public class PLG_Menu_Customer extends javax.swing.JFrame {
+    public PLG_Pesan_Produk produk = new PLG_Pesan_Produk(this);
+    public static PLG_Riwayat_Transaksi riwayat = new PLG_Riwayat_Transaksi();
+    public PLG_Profil profil = new PLG_Profil(this);
+    
     private CardLayout cardLayout;
+    
     /**
      * Creates new form Menu
      */
-    public Menu_Customer() {
+    
+    public PLG_Menu_Customer() {
         initComponents();
         this.setLocation(300,150);
         
@@ -58,7 +61,7 @@ public class Menu_Customer extends javax.swing.JFrame {
         btnPesan.setAlignmentX(Component.LEFT_ALIGNMENT);
         // Action Button Riwayat Transaksi        
         btnPesan.addActionListener(e ->{
-            Panel_Produk.cart.clear();
+            PLG_Pesan_Produk.cart.clear();
             cardLayout = (CardLayout) content.getLayout();
             content.add(produk, "produk");
             cardLayout.show(content, "produk");
@@ -82,7 +85,7 @@ public class Menu_Customer extends javax.swing.JFrame {
         btnRiwayatTransaksi.setAlignmentX(Component.LEFT_ALIGNMENT);
         // Action Button Riwayat Transaksi        
         btnRiwayatTransaksi.addActionListener(e ->{
-            Panel_Produk.cart.clear();
+            PLG_Pesan_Produk.cart.clear();
             riwayat.loadData();
             cardLayout.show(content, "riwayat");
             }  
@@ -112,17 +115,47 @@ public class Menu_Customer extends javax.swing.JFrame {
             }  
         );
         
+        // Profil pengguna Button
+        AP_RoundedButton btnLogout = new AP_RoundedButton(
+            "LOGOUT",     // Text Button
+            15,                // Border Radius
+            19,               // Normal Size Font
+            true,          // resize effect
+            true,           // hover effect
+            new Color(40, 90, 200) // hover color
+        );        
+        btnLogout.setBackground( new Color(255, 255, 255));
+        btnLogout.setForeground(Color.BLACK);
+        btnLogout.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnLogout.setPreferredSize(new Dimension(175, 40));
+        btnLogout.setMaximumSize(new Dimension(175, 40));
+        btnLogout.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Action Button Daftar Customer       
+        btnLogout.addActionListener(e ->{
+                logout();
+            }  
+        );
+        
         // Penambahan Elemen Ke Dalam Panel Menu
         menu.add(btnPesan);
         menu.add(Box.createVerticalStrut(15));
         menu.add(btnRiwayatTransaksi);
         menu.add(Box.createVerticalStrut(15));
         menu.add(btnProfil);
+        menu.add(Box.createVerticalStrut(15));
+        menu.add(btnLogout);
         
         all_menu.revalidate();
         all_menu.repaint();
         revalidate();
         repaint();
+    }
+    
+    private void logout(){
+        AP_Data.reset_User();
+        new Form_Login().setVisible(true);
+        this.dispose();
     }
 
     /**
@@ -252,39 +285,6 @@ public class Menu_Customer extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu_Customer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu_Customer().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel all_menu;

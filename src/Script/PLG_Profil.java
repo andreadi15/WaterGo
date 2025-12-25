@@ -30,11 +30,11 @@ import java.sql.Date;
  *
  * @author asus
  */
-public class Panel_Profil extends javax.swing.JPanel {
+public class PLG_Profil extends javax.swing.JPanel {
 //    public ResultSet rs;
 //    private List<AP_ProductCard> cards = new ArrayList<>();
 //    public static Map<String, Map<String, Object>> cart = new HashMap<>();
-    public static Menu_Customer menu_customer;
+    public static PLG_Menu_Customer menu_customer;
     public AP_RoundedButton btnSimpan;
     private String nama_user;
     private String password_value;
@@ -45,7 +45,7 @@ public class Panel_Profil extends javax.swing.JPanel {
      * Creates new form Panel_Produk
      */
 
-    public Panel_Profil(Menu_Customer menu) {
+    public PLG_Profil(PLG_Menu_Customer menu) {
         initComponents();
         setInputListener(nama);
         setInputListener(password);
@@ -70,7 +70,7 @@ public class Panel_Profil extends javax.swing.JPanel {
         btnSimpan.setVisible(false);
         panelBottom.add(btnSimpan);
         
-        Panel_Profil.menu_customer = menu;
+        PLG_Profil.menu_customer = menu;
         revalidate();
         repaint();
     }

@@ -10,29 +10,37 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
 /**
  *
  * @author asus
  */
-public class Menu_Admin extends javax.swing.JFrame {
-    public Daftar_Pesanan daftar_pesan = new Daftar_Pesanan();
-//    public static Info_Transaksi riwayat = new Info_Transaksi();
-//    public Panel_Profil profil = new Panel_Profil(this);
+public class ADM_Menu_Admin extends javax.swing.JFrame {
+    public ADM_Daftar_Pesanan daftar_pesan = new ADM_Daftar_Pesanan();
+    public ADM_Daftar_Produk daftar_produk = new ADM_Daftar_Produk();
+    public ADM_Daftar_Customer daftar_customer = new ADM_Daftar_Customer();
+    
     private CardLayout cardLayout;
+    
     /**
      * Creates new form Menu
      */
-    public Menu_Admin() {
+    
+    public ADM_Menu_Admin() {
         initComponents();
         this.setLocation(300,150);
         
-        daftar_pesan.loadData();
         cardLayout = (CardLayout) content.getLayout();
+        
+        daftar_pesan.loadData();
         content.add(daftar_pesan, "daftar_pesan");
-//        
-//        profil.loadData();
-//        content.add(profil, "profil");
-//        
+       
+        daftar_produk.loadData();
+        content.add(daftar_produk, "daftar_produk");
+        
+        daftar_customer.loadData();
+        content.add(daftar_customer, "daftar_customer");
+        
         // Blok Kode Panel Menu       
         AP_RoundedPanel menu = new AP_RoundedPanel(20);
         menu.setBackground(new Color(230,234,237));
@@ -40,10 +48,9 @@ public class Menu_Admin extends javax.swing.JFrame {
         menu.setSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
         menu.setOpaque(false);
         all_menu.add(menu);
-//        
         // Pesan Button
         AP_RoundedButton btnDaftarPesanan = new AP_RoundedButton(
-            "Pesan",        // Text Button
+            "Daftar Pesan",        // Text Button
             15,           // Border Radius
             19,          // Normal Size Font
             true,     // resize effect
@@ -63,66 +70,93 @@ public class Menu_Admin extends javax.swing.JFrame {
             }  
         );
 //        
-//        // Riwayat Transaksi Button
-//        AP_RoundedButton btnRiwayatTransaksi = new AP_RoundedButton(
-//            "Riwayat Pesan",     // Text Button
-//            15,                // Border Radius
-//            19,               // Normal Size Font
-//            true,          // resize effect
-//            true,           // hover effect
-//            new Color(40, 90, 200) // hover color
-//        );        
-//        btnRiwayatTransaksi.setBackground( new Color(255, 255, 255));
-//        btnRiwayatTransaksi.setForeground(Color.BLACK);
-//        btnRiwayatTransaksi.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-//        btnRiwayatTransaksi.setPreferredSize(new Dimension(175, 40));
-//        btnRiwayatTransaksi.setMaximumSize(new Dimension(175, 40));
-//        btnRiwayatTransaksi.setAlignmentX(Component.LEFT_ALIGNMENT);
-//        // Action Button Riwayat Transaksi        
-//        btnRiwayatTransaksi.addActionListener(e ->{
-//            Panel_Produk.cart.clear();
-//            riwayat.loadData();
-//            cardLayout.show(content, "riwayat");
-//            }  
-//        );
-//        
-//        // Profil pengguna Button
-//        AP_RoundedButton btnProfil = new AP_RoundedButton(
-//            "Profil",     // Text Button
-//            15,                // Border Radius
-//            19,               // Normal Size Font
-//            true,          // resize effect
-//            true,           // hover effect
-//            new Color(40, 90, 200) // hover color
-//        );        
-//        btnProfil.setBackground( new Color(255, 255, 255));
-//        btnProfil.setForeground(Color.BLACK);
-//        btnProfil.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
-//        btnProfil.setPreferredSize(new Dimension(175, 40));
-//        btnProfil.setMaximumSize(new Dimension(175, 40));
-//        btnProfil.setAlignmentX(Component.LEFT_ALIGNMENT);
-//        
-//        // Action Button Profil Pengguna        
-//        btnProfil.addActionListener(e ->{
-//            profil.btnSimpan.setVisible(false);
-//            profil.loadData();
-//            cardLayout.show(content, "profil");
-//            }  
-//        );
-//        
-//        // Penambahan Elemen Ke Dalam Panel Menu
+        // Riwayat Transaksi Button
+        AP_RoundedButton btnDaftarProduk = new AP_RoundedButton(
+            "Daftar Produk",     // Text Button
+            15,                // Border Radius
+            19,               // Normal Size Font
+            true,          // resize effect
+            true,           // hover effect
+            new Color(40, 90, 200) // hover color
+        );        
+        btnDaftarProduk.setBackground( new Color(255, 255, 255));
+        btnDaftarProduk.setForeground(Color.BLACK);
+        btnDaftarProduk.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnDaftarProduk.setPreferredSize(new Dimension(175, 40));
+        btnDaftarProduk.setMaximumSize(new Dimension(175, 40));
+        btnDaftarProduk.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Action Button Riwayat Transaksi        
+        btnDaftarProduk.addActionListener(e ->{
+                daftar_produk.loadData();
+                cardLayout.show(content, "daftar_produk");
+            }  
+        );
+
+        // Profil pengguna Button
+        AP_RoundedButton btnDaftarCustomer = new AP_RoundedButton(
+            "Daftar Customer",     // Text Button
+            15,                // Border Radius
+            19,               // Normal Size Font
+            true,          // resize effect
+            true,           // hover effect
+            new Color(40, 90, 200) // hover color
+        );        
+        btnDaftarCustomer.setBackground( new Color(255, 255, 255));
+        btnDaftarCustomer.setForeground(Color.BLACK);
+        btnDaftarCustomer.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnDaftarCustomer.setPreferredSize(new Dimension(175, 40));
+        btnDaftarCustomer.setMaximumSize(new Dimension(175, 40));
+        btnDaftarCustomer.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Action Button Daftar Customer       
+        btnDaftarCustomer.addActionListener(e ->{
+                daftar_customer.loadData();
+                cardLayout.show(content, "daftar_customer");
+            }  
+        );
+        
+        // Profil pengguna Button
+        AP_RoundedButton btnLogout = new AP_RoundedButton(
+            "LOGOUT",     // Text Button
+            15,                // Border Radius
+            19,               // Normal Size Font
+            true,          // resize effect
+            true,           // hover effect
+            new Color(40, 90, 200) // hover color
+        );        
+        btnLogout.setBackground( new Color(255, 255, 255));
+        btnLogout.setForeground(Color.BLACK);
+        btnLogout.setFont(new Font("Antipasto Pro Bold", Font.BOLD, 24));
+        btnLogout.setPreferredSize(new Dimension(175, 40));
+        btnLogout.setMaximumSize(new Dimension(175, 40));
+        btnLogout.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Action Button Daftar Customer       
+        btnLogout.addActionListener(e ->{
+                logout();
+            }  
+        );
+  
+        //Penambahan Elemen Ke Dalam Panel Menu
         menu.add(btnDaftarPesanan);
-//        menu.add(Box.createVerticalStrut(15));
-//        menu.add(btnRiwayatTransaksi);
-//        menu.add(Box.createVerticalStrut(15));
-//        menu.add(btnProfil);
-//        
+        menu.add(Box.createVerticalStrut(15));
+        menu.add(btnDaftarProduk);
+        menu.add(Box.createVerticalStrut(15));
+        menu.add(btnDaftarCustomer);
+        menu.add(Box.createVerticalStrut(15));
+        menu.add(btnLogout);
+      
         all_menu.revalidate();
         all_menu.repaint();
         revalidate();
         repaint();
     }
 
+    private void logout(){
+        AP_Data.reset_User();
+        new Form_Login().setVisible(true);
+        this.dispose();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -250,41 +284,6 @@ public class Menu_Admin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu_Admin().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel all_menu;

@@ -15,7 +15,7 @@ import javax.swing.JLabel;
  *
  * @author asus
  */
-public class detail_pesanan extends javax.swing.JFrame {
+public class ADM_Detail_Pesanan extends javax.swing.JFrame {
 
     private ResultSet rs;
     private String sql;
@@ -23,7 +23,7 @@ public class detail_pesanan extends javax.swing.JFrame {
     /**
      * Creates new form JFrame
      */
-    public detail_pesanan() {
+    public ADM_Detail_Pesanan() {
         initComponents();
         this.setLocation(525, 250);
         
@@ -31,18 +31,13 @@ public class detail_pesanan extends javax.swing.JFrame {
         catatan_area.setWrapStyleWord(true); 
         catatan_area.setBorder(null);
         catatan_area.setOpaque(false);
+        
         catatan_scrool.setBorder(null);
         catatan_scrool.setViewportBorder(null);
         catatan_scrool.setOpaque(false);
-        catatan_scrool.getViewport().setOpaque(false);
-        
-        catatan_scrool.setHorizontalScrollBarPolicy(
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
-        );
-
-        catatan_scrool.setVerticalScrollBarPolicy(
-            JScrollPane.VERTICAL_SCROLLBAR_NEVER
-        );
+        catatan_scrool.getViewport().setOpaque(false);        
+        catatan_scrool.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        catatan_scrool.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
     }
 
     public void loadData(String id_pesanan) {

@@ -17,14 +17,14 @@ import javax.swing.table.TableColumn;
  *
  * @author asus
  */
-public class Daftar_Pesanan extends javax.swing.JPanel {
+public class ADM_Daftar_Pesanan extends javax.swing.JPanel {
     public ResultSet rs = null;
-    private detail_pesanan detail_pesan = new detail_pesanan();
+    private ADM_Detail_Pesanan detail_pesan = new ADM_Detail_Pesanan();
  ;
     private String sql;
 
     
-    public Daftar_Pesanan() {
+    public ADM_Daftar_Pesanan() {
         initComponents();
         
         TableColumn idColumn = tableContainer.getColumnModel().getColumn(0);
@@ -354,9 +354,7 @@ public class Daftar_Pesanan extends javax.swing.JPanel {
 
         if (cari_value != null && !cari_value.trim().isEmpty()) {
             cariData(cari_value);
-        } else {
-            JOptionPane.showMessageDialog(this, "Kata kunci tidak boleh kosong.", "Peringatan", JOptionPane.WARNING_MESSAGE);
-        }
+        } 
     }//GEN-LAST:event_cariActionPerformed
 
     private void cari1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cari1ActionPerformed

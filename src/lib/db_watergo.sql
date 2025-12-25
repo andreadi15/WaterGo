@@ -51,18 +51,15 @@ DROP TABLE IF EXISTS produk;
 CREATE TABLE produk (
     id_produk VARCHAR(255),
     nama_produk TEXT,
-    deskripsi TEXT,
-    harga DOUBLE,
-    stok INT,
-    satuan TEXT,
+    harga INT,
     created_at DATE,
     updated_at DATE,
     PRIMARY KEY (id_produk)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO produk VALUES
-('PRD001', 'Air Galon Isi Ulang', 'Air mineral isi ulang', 5000, 50, 'galon', '2025-01-01', '2025-01-01'),
-('PRD002', 'Galon Kosong', 'Galon kosong tanpa isi', 25000, 20, 'galon', '2025-01-01', '2025-01-01');
+('PRD001', 'Air Galon Isi Ulang', 5000, '2025-01-01', '2025-01-01'),
+('PRD002', 'Galon Kosong', 25000, '2025-01-01', '2025-01-01');
 
 -- ====================================
 -- TABLE: pesanan
@@ -97,7 +94,7 @@ CREATE TABLE detail_pesanan (
     id_product VARCHAR(255),
     jumlah INT,
     harga_satuan INT,
-    subtotal DOUBLE,
+    subtotal INT,
     PRIMARY KEY (id_detail)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
